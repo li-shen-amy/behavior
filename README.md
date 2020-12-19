@@ -4,7 +4,7 @@
 
 # Behavior toolbox
 
-# lick_detect
+# Lick Detection
 video based licking detection
 
 # Self Stimulation
