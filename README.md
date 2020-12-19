@@ -4,5 +4,13 @@
 
 # Behavior toolbox
 
-# lick_detect
+# Lick Detection
 video based licking detection
+
+# Self Stimulation
+
+# Animal Tracking
+
+Paper: Guang-Wei Zhang, Li Shen, Zhong Li,  View ORCID ProfileHuizhong W. Tao, Li I. Zhang (2019). Track-Control, an automatic video-based real-time closed-loop behavioral control toolbox.bioRxiv. doi: https://doi.org/10.1101/2019.12.11.873372
+
+Toolbox: https://github.com/GuangWei-Zhang/TraCon-Toolbox/
