@@ -5,8 +5,10 @@
 # Behavior toolbox
 
 ## Lick Detection
-This toolbox is for automatically detect rodent licking from video data.
-
+This python toolbox is for automatically detect rodent licking from video data.
+Processing pipeline: 
+- Required packages: numpy, cv2, tkinter, os (python3)
+- 
 
 ## Self Stimulation
 
