@@ -2,7 +2,7 @@
 """
 Created on Thu Oct 25 20:17:02 2018
 
-@author: zhanglab
+@author: zhanglab (Li Shen, Guangwei Zhang)
 """
 '''
 import matplotlib.pyplot as plt
@@ -30,10 +30,6 @@ def animate(i):
 ani = animation.FuncAnimation(fig,animate,interval =1000)
 
 '''
-
-
-
-
 
 
 import numpy as np
