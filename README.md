@@ -16,13 +16,12 @@ Processing pipeline:
 - 
 ### (1)	Capture video:
 Capture mouse licking video using infrared camera (Demo at “demo/ Lick_demo.mp4”). Capture a infrared LED signal in the video as trigger if needed.
-        <p align="left">
-  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/no_lick.png" />
-</p>      
-      <p align="right">
-  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/licking.png" />
+No licking and Licking images are shown below:
+        <p>
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/no_lick.png" Alt="No licking"/>
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/licking.png" Alt="licking"/>
 </p>     
-            No licking                                                                          Lick
+
 ### (2)	Change configurations:
 Change configuration in python script: “ Python_scripts/ Lick_cue_detection.py” Line 41-43:
 ```.py
