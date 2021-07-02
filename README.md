@@ -17,10 +17,10 @@ Processing pipeline:
 ### (1)	Capture video:
 Capture mouse licking video using infrared camera (Demo at “demo/ Lick_demo.mp4”). Capture a infrared LED signal in the video as trigger if needed.
         <p align="left">
-  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/no_lick.png" />
 </p>      
       <p align="right">
-  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/licking.png" />
 </p>     
             No licking                                                                          Lick
 ### (2)	Change configurations:
@@ -38,7 +38,7 @@ Run python code: “ Python_scripts/ Lick_cue_detection.py”
 ### (4)	Select ROI region. 
 If both “cue_detect” and “lick_detect” set to 1, select Cue ROI first, then Lick ROI. Otherwise, just select one ROI according to the parameters.
          <p align="center">
-  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/ROI_selection.png" />
 </p>  
 ### (5)	Export index:
 The detected lick_index is saved as “Lick_demo_lick.csv” (or cue_index saved as “Lick_demo_cue.csv” if cue_detect==1)  
@@ -53,7 +53,7 @@ diff_lick = 1; % 1: difference signal; 0: absolute signal
 ```
 Run the codes, get the lick timestamp (variable: lick_timestamp) and visualization as following:
         <p align="center">
-  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/vis_lick.png" />
 </p>  
  
 
