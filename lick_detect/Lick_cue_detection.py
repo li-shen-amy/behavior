@@ -2,7 +2,7 @@
 """
 Created on Thu Oct 25 20:17:02 2018
 
-@author: zhanglab (Li Shen, Guangwei Zhang)
+@authors: Li Shen & Guangwei Zhang @ University of Southern California
 """
 '''
 import matplotlib.pyplot as plt
@@ -30,13 +30,18 @@ def animate(i):
 ani = animation.FuncAnimation(fig,animate,interval =1000)
 
 '''
-
-
 import numpy as np
 import cv2
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 import os
+
+
+## configurations
+cue_detect = 1
+lick_detect = 1
+use_red_ch = 0
+
 
 Tk().withdraw() # we don't want a full GUI, so keep the root window from appearing
 filename = askopenfilename() # show an "Open" dialog box and return the path to the selected file
@@ -81,68 +86,54 @@ while(True):
     _, frame3 = cap.read()
     i+=1
     if i==1:
-        r = cv2.selectROI(frame3)
-    
-    #img_gray = cv2.cvtColor(frame3,cv2.COLOR_BGR2GRAY)
-        y_start = int(r[0])
-        y_stop = int(r[0]+r[2])
-        
-        x_start = int(r[1])
-        x_stop = int(r[1]+r[3])
-        #out = cv2.VideoWriter(root + '_roi.mp4', fourcc, 30, (r[2], r[3]))
-
-        r2 = cv2.selectROI(frame3)
-
-        # img_gray = cv2.cvtColor(frame3,cv2.COLOR_BGR2GRAY)
-        y_start2 = int(r2[0])
-        y_stop2 = int(r2[0] + r2[2])
-
-        x_start2 = int(r2[1])
-        x_stop2 = int(r2[1] + r2[3])
-        #out2 = cv2.VideoWriter(root + '_lick_roi.mp4', fourcc, 30, (r2[2], r2[3]))
+        if cue_detect == 1:
+            r = cv2.selectROI(frame3)
+            #img_gray = cv2.cvtColor(frame3,cv2.COLOR_BGR2GRAY)
+            y_start = int(r[0])
+            y_stop = int(r[0]+r[2])
+            
+            x_start = int(r[1])
+            x_stop = int(r[1]+r[3])
+            #out = cv2.VideoWriter(root + '_roi.mp4', fourcc, 30, (r[2], r[3]))
+            
+        if lick_detect == 1:
+            r2 = cv2.selectROI(frame3)
+            # img_gray = cv2.cvtColor(frame3,cv2.COLOR_BGR2GRAY)
+            y_start2 = int(r2[0])
+            y_stop2 = int(r2[0] + r2[2])
+            x_start2 = int(r2[1])
+            x_stop2 = int(r2[1] + r2[3])
+            #out2 = cv2.VideoWriter(root + '_lick_roi.mp4', fourcc, 30, (r2[2], r2[3]))
 
     #frame3 = img_gray
-
+    cv2.imshow('frame', frame3)
     rows, cols, _ = np.shape(frame3)
-    cv2.imshow('dist', frame3[x_start:x_stop,y_start:y_stop])
+    # cv2.imshow('dist', frame3[x_start:x_stop,y_start:y_stop])
     #dist = distMap(frame1[x_start:x_stop,y_start:y_stop], frame3[x_start:x_stop,y_start:y_stop])
-    mod = frame3[x_start:x_stop,y_start:y_stop]
-    mod2= frame3[x_start2:x_stop2,y_start2:y_stop2,0]
+    if cue_detect == 1:
+        mod = frame3[x_start:x_stop,y_start:y_stop]
+        cue_index = np.mean(mod)
+        line = str(i)+','+str(cue_index)+'\n'
+        with open(root+r'_cue.csv','a') as f:
+            f.write(line)
+        #out.write(mod)
+            
+    if lick_detect == 1:
+        mod2= frame3[x_start2:x_stop2,y_start2:y_stop2,:]
+        if use_red_ch==1:
+            modg= mod2[:,:,0]
+            modb= mod2[:,:,1]
+            lick_index = np.mean(mod2[:,:,2])-0.5*(np.mean(modg)+np.mean(modb))
+        else:
+            lick_index = np.mean(mod2)
+
+        cv2.imshow('lick', mod2)
+        line = str(i) + ',' + str(lick_index) + '\n'
+        with open(root + r'_lick.csv', 'a') as f:
+            f.write(line)
+    
     frame1 = frame2
     frame2 = frame3
-
-    # apply Gaussian smoothing
-    #mod = cv2.GaussianBlur(dist, (9,9), 0)
-    cue_index = np.mean(mod)
-    lick_index = np.mean(mod2)
-    # apply thresholding
-    _, thresh = cv2.threshold(mod, 100, 255, 0)
-
-    # calculate st dev test
-    _, stDev = cv2.meanStdDev(mod)
-
-    cv2.imshow('dist', mod)
-    cv2.putText(frame2, "Standard Deviation - {}".format(round(stDev[0][0],0)), (70, 70), font, 1, (255, 0, 255), 1, cv2.LINE_AA)
-    #if stDev > sdThresh:
-        #    print("Motion detected.. Do something!!!");
-            #TODO: Face Detection 2
-
-    cv2.imshow('frame', frame2)
-    cv2.imshow('lick', mod2)
-
-    line = str(i)+','+str(cue_index)+'\n'
-    with open(root+r'_cue.csv','a') as f:
-        f.write(line)
-    #out.write(mod)
-
-    line = str(i) + ',' + str(lick_index) + '\n'
-    with open(root + r'_lick.csv', 'a') as f:
-        f.write(line)
-    #mod2_frame[:,:,0] = mod2
-    #mod2_frame[:,:,1] = mod2
-    #mod2_frame[:,:,2] = mod2
-    #out2.write(mod2)
-        
     if cv2.waitKey(1) & 0xFF == 27:
         break
 
