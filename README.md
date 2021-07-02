@@ -13,6 +13,50 @@ Processing pipeline:
 - Average gray scale within ROI
 - (Optional) Thresholding, Average, Standard-Deviation 
 - Save index to Excel file (real-time)
+- 
+### (1)	Capture video:
+Capture mouse licking video using infrared camera (Demo at “demo/ Lick_demo.mp4”). Capture a infrared LED signal in the video as trigger if needed.
+        <p align="left">
+  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+</p>      
+      <p align="right">
+  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+</p>     
+            No licking                                                                          Lick
+### (2)	Change configurations:
+Change configuration in python script: “ Python_scripts/ Lick_cue_detection.py” Line 41-43:
+```.py
+cue_detect = 1
+lick_detect = 1
+use_red_ch = 0
+```
+if you have trigger signal to detect, please set “cue_detect=1”, otherwise, set “cue_detect=0”.
+For lick detection, just leave “lick_detect=1”, otherwise, set “lick_detect=0”.
+If video is captured as color mode (mouse tongue shows red), set “use_red_ch = 1” to get better result, otherwise, “use_red_ch = 0”.
+### (3)	Run detection code:
+Run python code: “ Python_scripts/ Lick_cue_detection.py”
+### (4)	Select ROI region. 
+If both “cue_detect” and “lick_detect” set to 1, select Cue ROI first, then Lick ROI. Otherwise, just select one ROI according to the parameters.
+         <p align="center">
+  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+</p>  
+### (5)	Export index:
+The detected lick_index is saved as “Lick_demo_lick.csv” (or cue_index saved as “Lick_demo_cue.csv” if cue_detect==1)  
+### (6)	Thresholding and visualize results:
+Open “matlab_scripts\lick_ana.m”, set configurations:
+```.m
+inv_lick=1; % 0: brighter for lick ; 1: darker for lick
+smooth_lick=1; % smooth
+smooth_range=51;
+thre_percent = 80; % automatic thresholding
+diff_lick = 1; % 1: difference signal; 0: absolute signal
+```
+Run the codes, get the lick timestamp (variable: lick_timestamp) and visualization as following:
+        <p align="center">
+  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
+</p>  
+ 
+
 
 ## Self Stimulation
 A behavior box for self-stimulation test: LED stimulation was triggered whenever the animal nose-poked the designated LED-on port, whereas nose-poking the other port did not trigger any photostimulation.
