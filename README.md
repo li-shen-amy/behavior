@@ -62,6 +62,30 @@ A behavior box for self-stimulation test: LED stimulation was triggered whenever
 
 **Details**: Mice were placed in an operant box equipped with two ports for nose poke at symmetrical locations on one of the cage walls. The ports were connected to a photo-beam detection device allowing for measurements of responses. A valid nose poke at the LED-on port lasting for at least 500 ms triggered a 1 sec long 20 Hz (5-ms pulse duration) LED pulse train delivery controlled by an Arduino microcontroller. The LED-on port was randomly assigned and balanced within the group of tested animals. The test lasted for 40 mins. Video and time stamps associated with nose poke and laser events were saved in a computer file for post hoc analysis.
 
+# Procedure:
+## (1)	Connect Arduino to computer and infrared beam to detect nosepoke with input pin (13 by default).
+## (2)	Set configuration in “SelfStimulation.ino”, program the Arduino:
+```.cpp
+const int InputPin=13;  // pin connected to infrared beam to detect nosepoke
+const int PowerPin=6; // pin connected to stimulation
+const int DetectInt=500;  // interval for detection
+const int RewardDur=1000; // reward duration 
+const int OnDur=20; // Stimulus On duration
+const int OffDur=30; // Stimulus Off duration
+```
+## (3)	Set configurations in _“Export_nosepoking.py”_
+Set the correct serial port and output filename:
+```.cpp
+ser = serial.Serial('/dev/cu.usbmodem14201',9600)
+```
+```.cpp
+    with open('nosepoking.csv','a') as f:
+ ```
+## (4)	Run.
+Set up camera, record the video and run _“Export_nosepoking.py”_.
+## (5)	Align timestamp.
+After experiment, align the first detected timestamp (shown as “1” in the output file) with the first nosepoke timestamp recorded in video.
+
 ## Real-Time Animal Tracking (Cooperative project)
 <p align="center">
   <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
