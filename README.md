@@ -6,6 +6,10 @@
 
 ## Lick Detection
 This python toolbox is for automatically detect rodent licking from video data.
+- Software dependency: Python >= 3.0, Matlab >= 7.0
+- Operating System: Windows, Linux, MacOS
+- Typical running time:  5min for 1h video
+
 Required packages: numpy, cv2, tkinter, os (python3)
 Processing pipeline: 
 - Select and Open the movie files
@@ -23,27 +27,31 @@ No licking and Licking images are shown below:
 </p>     
 
 ### (2)	Change configurations:
-Change configuration in python script: “ Python_scripts/ Lick_cue_detection.py” Line 41-43:
+Change configuration in python script: _“Python_scripts/ Lick_cue_detection.py”_ Line 41-43:
 ```.py
 cue_detect = 1
 lick_detect = 1
 use_red_ch = 0
 ```
-if you have trigger signal to detect, please set “cue_detect=1”, otherwise, set “cue_detect=0”.
-For lick detection, just leave “lick_detect=1”, otherwise, set “lick_detect=0”.
-If video is captured as color mode (mouse tongue shows red), set “use_red_ch = 1” to get better result, otherwise, “use_red_ch = 0”.
+if you have trigger signal to detect, please set ```cue_detect=1```, otherwise, set ```cue_detect=0```.
+For lick detection, just leave ```lick_detect=1```, otherwise, set ```lick_detect=0```.
+If video is captured as color mode (mouse tongue shows red), set ```use_red_ch = 1``` to get better result, otherwise, ```use_red_ch = 0```.
+
 ### (3)	Run detection code:
-Run python code: “ Python_scripts/ Lick_cue_detection.py”
+Run python code: _“Python_scripts/ Lick_cue_detection.py”_
+
 ### (4)	Select ROI region. 
-If both “cue_detect” and “lick_detect” set to 1, select Cue ROI first, then Lick ROI. Otherwise, just select one ROI according to the parameters.
+If both ```cue_detect``` and ```lick_detect``` set to 1, select Cue ROI first, then Lick ROI. Otherwise, just select one ROI according to the parameters.
          <p align="center">
   <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/ROI_selection.png" />
 </p>  
+
 ### (5)	Export index:
-The detected lick_index is saved as “Lick_demo_lick.csv” (or cue_index saved as “Lick_demo_cue.csv” if cue_detect==1)  
+The detected lick_index is saved as _“Lick_demo_lick.csv”_ (or cue_index saved as _“Lick_demo_cue.csv”_ if ```cue_detect==1```)  
+
 ### (6)	Thresholding and visualize results:
-Open “matlab_scripts\lick_ana.m”, set configurations:
-```.m
+Open _“matlab_scripts\lick_ana.m”_, set configurations:
+```.matlab
 inv_lick=1; % 0: brighter for lick ; 1: darker for lick
 smooth_lick=1; % smooth
 smooth_range=51;
@@ -94,9 +102,9 @@ https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Gif_folder/demo_1.gi
 </p>
 
 Animal tracking from video is used for analyzing behavior data in **Real-time place preference**, **spatial reward seeking**, **light/dark box test** etc.
-Software dependency: Python >= 3.0
-Operating System: Windows, Linux, MacOS
-Typical running time:  5min for 1h video
+- Software dependency: Python >= 3.0
+- Operating System: Windows, Linux, MacOS
+- Typical running time:  5min for 1h video
 
 **Offine Procedure**:
 ### (1)	Get the video ready, perform geometric Transform:
@@ -125,6 +133,9 @@ Reward seeking demo
   </p>  
   
 **On-Line Real-Time experimental control**
+- Software dependency: Python >= 3.0, Arduino Software
+- Operating System: Windows, Linux, MacOS + Arduino Board
+
 ### 1.	Real-time Place Preference (RTPP)
 **Procedure**:
 #### (1)	Connect Arduino as shown below.
