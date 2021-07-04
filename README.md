@@ -55,8 +55,6 @@ Run the codes, get the lick timestamp (variable: lick_timestamp) and visualizati
   <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/vis_lick.png" />
 </p>  
  
-
-
 ## Self Stimulation
 A behavior box for self-stimulation test: LED stimulation was triggered whenever the animal nose-poked the designated LED-on port, whereas nose-poking the other port did not trigger any photostimulation.
 
@@ -86,7 +84,7 @@ Set up camera, record the video and run _“Export_nosepoking.py”_.
 ### (5)	Align timestamp.
 After experiment, align the first detected timestamp (shown as “1” in the output file) with the first nosepoke timestamp recorded in video.
 
-## Real-Time Animal Tracking (Cooperative project)
+## Animal Tracking (Cooperative project)
 <p align="center">
   <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Architecture.jpg" />
 </p>
@@ -95,7 +93,7 @@ After experiment, align the first detected timestamp (shown as “1” in the ou
 https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Gif_folder/demo_1.gif" />
 </p>
 
-Animal tracking from video is used for analyzing behavior data in Real-time place preference, spatial reward seeking, light/dark box test etc.
+Animal tracking from video is used for analyzing behavior data in **Real-time place preference**, **spatial reward seeking**, **light/dark box test** etc.
 Software dependency: Python >= 3.0
 Operating System: Windows, Linux, MacOS
 Typical running time:  5min for 1h video
@@ -115,19 +113,25 @@ Get the coordinate of tracking position (x,y) and speed as three columns stored 
 _“demo/RTPP_demo.mp4”_, _“Reward_seeking_tracking_demo.mp4”_.
          <p align="center">
   <img src="https://github.com/li-shen-amy/behavior/raw/main/mouse_tracking/demo/RTPP_demo.png" />
-</p>  
+  </p>
+<p align="center">
 Real-time place preference Test demo
-         <p align="center">
+  </p>
+<p align="center">
   <img src="https://github.com/li-shen-amy/behavior/raw/main/mouse_tracking/demo/reward_seeking_demo.png" />
-</p>  
+  </p>
+<p align="center">
 Reward seeking demo
+  </p>  
+  
 **On-Line Real-Time experimental control**
 ### 1.	Real-time Place Preference (RTPP)
-Procedure:
+**Procedure**:
 #### (1)	Connect Arduino as shown below.
           <p align="center">
   <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Arduino.jpg" />
 </p>   
+
 #### (2)	Programming Arduino with code “Arduino_codes/AutoRTPP.ino”
 #### (3)	Set configurations.
 Open _“python_scripts/AutoPlacePreference.py”_, set the serial port connecting to Arduino, root and filename of the output video, and total duration for the test (min):
@@ -143,8 +147,10 @@ out = cv2.VideoWriter(root+'RTPP_test.mp4',fourcc,30,(width,height))
 ```.py
 totalduration = 21
 ```
+
 #### (4)	Get animal and camera ready, then run the code.
 The photostimulation signal will output according to animal’s position. By default, when the animal enters the left half space, a stimulation will output, otherwise, no stimulation will output.
+
 #### (5)	Export the data.
 After the experiment, the percentage of time spent on the stimulation side (left) will be shown in console window, and the video will be saved. The coordinate of tracking position (x,y) and speed as three columns stored in _“(movie filename)_trackTrace.csv”_.
 
