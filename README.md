@@ -70,6 +70,34 @@ A behavior box for self-stimulation test: LED stimulation was triggered whenever
   <img src="
 https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Gif_folder/demo_1.gif" />
 </p>
+
+Animal tracking from video is used for analyzing behavior data in Real-time place preference, spatial reward seeking, light/dark box test etc.
+Software dependency: Python >= 3.0
+Operating System: Windows, Linux, MacOS
+Typical running time:  5min for 1h video
+
+Procedure:
+### (1)	Get the video ready, perform geometric Transform:
+Open _“Python_scripts\Batch_GeoTran.py”_, set the geometry dimension (Line 170-171):
+```.py
+box_length = 480 
+box_width = 480
+```
+Run the script, select batch videos to be processed, select ROI by labeling the four points (top left, top right, bottom left and bottom right), then press “c” button. The output video will be named as _“(original movie filename)_GeometricallyTransformed.mp4”_
+### (2)	Automatic tracking:
+Run _Mice_Tracking.py_ for general tracking purpose, or _Batch_PlacePreference_Offline.py_ for Real-time Place Preference test, or _Batch_Dark_light_box.py_ for Dark/Light Box test.
+
+Get the coordinate of tracking position (x,y) and speed as three columns stored in _“(original movie filename)_GeometricallyTransformed_trackTrace.csv”_ and trace imposed video as _“(original movie filename)_GeometricallyTransformed_out.mp4”_ as shown in 
+_“demo/RTPP_demo.mp4”_, _“Reward_seeking_tracking_demo.mp4”_.
+         <p align="center">
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/mouse_tracking/demo/RTPP_demo.png" />
+</p>  
+Real-time place preference Test demo
+         <p align="center">
+  <img src="https://github.com/li-shen-amy/behavior/raw/main/mouse_tracking/demo/reward_seeking_demo.png" />
+</p>  
+Reward seeking demo
+
 Paper: Guang-Wei Zhang, Li Shen, Zhong Li,  Huizhong W. Tao, Li I. Zhang (2019). Track-Control, an automatic video-based real-time closed-loop behavioral control toolbox.bioRxiv. doi: https://doi.org/10.1101/2019.12.11.873372
 
 Toolbox: https://github.com/GuangWei-Zhang/TraCon-Toolbox/
