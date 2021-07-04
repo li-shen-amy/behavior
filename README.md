@@ -62,9 +62,9 @@ A behavior box for self-stimulation test: LED stimulation was triggered whenever
 
 **Details**: Mice were placed in an operant box equipped with two ports for nose poke at symmetrical locations on one of the cage walls. The ports were connected to a photo-beam detection device allowing for measurements of responses. A valid nose poke at the LED-on port lasting for at least 500 ms triggered a 1 sec long 20 Hz (5-ms pulse duration) LED pulse train delivery controlled by an Arduino microcontroller. The LED-on port was randomly assigned and balanced within the group of tested animals. The test lasted for 40 mins. Video and time stamps associated with nose poke and laser events were saved in a computer file for post hoc analysis.
 
-# Procedure:
-## (1)	Connect Arduino to computer and infrared beam to detect nosepoke with input pin (13 by default).
-## (2)	Set configuration in “SelfStimulation.ino”, program the Arduino:
+**Procedure**:
+### (1)	Connect Arduino to computer and infrared beam to detect nosepoke with input pin (13 by default).
+### (2)	Set configuration in “SelfStimulation.ino”, program the Arduino:
 ```.cpp
 const int InputPin=13;  // pin connected to infrared beam to detect nosepoke
 const int PowerPin=6; // pin connected to stimulation
@@ -73,7 +73,7 @@ const int RewardDur=1000; // reward duration
 const int OnDur=20; // Stimulus On duration
 const int OffDur=30; // Stimulus Off duration
 ```
-## (3)	Set configurations in _“Export_nosepoking.py”_
+### (3)	Set configurations in _“Export_nosepoking.py”_
 Set the correct serial port and output filename:
 ```.cpp
 ser = serial.Serial('/dev/cu.usbmodem14201',9600)
@@ -81,9 +81,9 @@ ser = serial.Serial('/dev/cu.usbmodem14201',9600)
 ```.cpp
     with open('nosepoking.csv','a') as f:
  ```
-## (4)	Run.
+### (4)	Run.
 Set up camera, record the video and run _“Export_nosepoking.py”_.
-## (5)	Align timestamp.
+### (5)	Align timestamp.
 After experiment, align the first detected timestamp (shown as “1” in the output file) with the first nosepoke timestamp recorded in video.
 
 ## Real-Time Animal Tracking (Cooperative project)
@@ -100,7 +100,7 @@ Software dependency: Python >= 3.0
 Operating System: Windows, Linux, MacOS
 Typical running time:  5min for 1h video
 
-Procedure:
+**Offine Procedure**:
 ### (1)	Get the video ready, perform geometric Transform:
 Open _“Python_scripts\Batch_GeoTran.py”_, set the geometry dimension (Line 170-171):
 ```.py
@@ -121,7 +121,33 @@ Real-time place preference Test demo
   <img src="https://github.com/li-shen-amy/behavior/raw/main/mouse_tracking/demo/reward_seeking_demo.png" />
 </p>  
 Reward seeking demo
+**On-Line Real-Time experimental control**
+### 1.	Real-time Place Preference (RTPP)
+Procedure:
+#### (1)	Connect Arduino as shown below.
+          <p align="center">
+  <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Arduino.jpg" />
+</p>   
+#### (2)	Programming Arduino with code “Arduino_codes/AutoRTPP.ino”
+#### (3)	Set configurations.
+Open _“python_scripts/AutoPlacePreference.py”_, set the serial port connecting to Arduino, root and filename of the output video, and total duration for the test (min):
+```.py
+arduinoData =serial.Serial('/dev/cu.usbmodem14201',9600)
+```
+```.py
+root = '/RTPP/'
+```
+```.py
+out = cv2.VideoWriter(root+'RTPP_test.mp4',fourcc,30,(width,height))
+```
+```.py
+totalduration = 21
+```
+#### (4)	Get animal and camera ready, then run the code.
+The photostimulation signal will output according to animal’s position. By default, when the animal enters the left half space, a stimulation will output, otherwise, no stimulation will output.
+#### (5)	Export the data.
+After the experiment, the percentage of time spent on the stimulation side (left) will be shown in console window, and the video will be saved. The coordinate of tracking position (x,y) and speed as three columns stored in _“(movie filename)_trackTrace.csv”_.
 
-Paper: Guang-Wei Zhang, Li Shen, Zhong Li,  Huizhong W. Tao, Li I. Zhang (2019). Track-Control, an automatic video-based real-time closed-loop behavioral control toolbox.bioRxiv. doi: https://doi.org/10.1101/2019.12.11.873372
+**Paper**: Guang-Wei Zhang, Li Shen, Zhong Li,  Huizhong W. Tao, Li I. Zhang (2019). Track-Control, an automatic video-based real-time closed-loop behavioral control toolbox.bioRxiv. doi: https://doi.org/10.1101/2019.12.11.873372
 
 Toolbox: https://github.com/GuangWei-Zhang/TraCon-Toolbox/
