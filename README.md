@@ -13,7 +13,7 @@ Processing pipeline:
 - Average gray scale within ROI
 - (Optional) Thresholding, Average, Standard-Deviation 
 - Save index to Excel file (real-time)
-- 
+
 ### (1)	Capture video:
 Capture mouse licking video using infrared camera (Demo at “demo/ Lick_demo.mp4”). Capture a infrared LED signal in the video as trigger if needed.
 No licking and Licking images are shown below:
