@@ -139,7 +139,7 @@ Reward seeking demo
 ### 1.	Real-time Place Preference (RTPP)
 **Procedure**:
 #### (1)	Connect Arduino as shown below.
-          <p align="center">
+<p align="center">
   <img src="https://github.com/GuangWei-Zhang/TraCon-Toolbox/raw/master/Images/Arduino.jpg" />
 </p>   
 
