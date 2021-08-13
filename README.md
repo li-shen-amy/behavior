@@ -6,11 +6,12 @@
 
 ## Lick Detection
 This python toolbox is for automatically detect rodent licking from video data.
-- Software dependency: Python >= 3.0, Matlab >= 7.0
+- Software dependency: Python >= 3.0
 - Operating System: Windows, Linux, MacOS
 - Typical running time:  5min for 1h video
 
 Required packages: numpy, cv2, tkinter, os (python3)
+
 Processing pipeline: 
 - Select and Open the movie files
 - Select the Region of Interest (ROI) interactively: areas contain tongue image (and trigger LED signal if needed)
@@ -165,6 +166,6 @@ The photostimulation signal will output according to animal’s position. By def
 #### (5)	Export the data.
 After the experiment, the percentage of time spent on the stimulation side (left) will be shown in console window, and the video will be saved. The coordinate of tracking position (x,y) and speed as three columns stored in _“(movie filename)_trackTrace.csv”_.
 
+# References
 **Paper**: Guang-Wei Zhang, Li Shen, Zhong Li,  Huizhong W. Tao, Li I. Zhang (2019). Track-Control, an automatic video-based real-time closed-loop behavioral control toolbox.bioRxiv. doi: https://doi.org/10.1101/2019.12.11.873372
-
-Toolbox: https://github.com/GuangWei-Zhang/TraCon-Toolbox/
+https://github.com/GuangWei-Zhang/TraCon-Toolbox/
