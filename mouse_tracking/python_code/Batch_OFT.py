@@ -1,7 +1,6 @@
 '''
-Requirement: opencv-python, tkinter
-Usage instruction: 
-
+# Requiment: Python 3, opencv-python, tkinter
+# Usage instruction: 
 Select downsampled video file (recommend 480p x 480p for faster speed)
 Once finished, video with tracking trace and excel sheet appear in source folder for video
 For excel file: three columns, first is x, second is y coord, third is pixel distance traveled between frames
@@ -23,29 +22,22 @@ from tkinter.filedialog import askopenfilenames
 
 root1 = Tk()
 filez = askopenfilenames(parent = root1, title = 'Choose file')
-
+Total_distance=0
 for fullFileName in root1.tk.splitlist(filez):
     filename = fullFileName
     (root, ext) =os.path.splitext(filename) 
-    print(root)
-    
+    print(root)    
     duration = 1  # second
     freq = 440  # Hz
-
     #mouse_cascade = cv2.CascadeClassifier('mouse_body_cascade.xml')
-    cap = cv2.VideoCapture(filename)
-    
+    cap = cv2.VideoCapture(filename)    
     Moving_track = [(0,0)]
-    ## add text
-    font = cv2.FONT_HERSHEY_SIMPLEX
-    
+    font = cv2.FONT_HERSHEY_SIMPLEX    
     # export video setting
     width = int(cap.get(3))
-    height = int(cap.get(4))    
-    
+    height = int(cap.get(4))        
     fourcc = cv2.VideoWriter_fourcc('m','p','4','v')
     out = cv2.VideoWriter(root+'_out_half_widthCenterOFT.mp4',fourcc,30,(width,height))
-
     Peak_speed = 0
     while not cap.isOpened():
         cap = cv2.VideoCapture(filename)
@@ -58,7 +50,6 @@ for fullFileName in root1.tk.splitlist(filez):
     i=0
     Counting = 0
     record = False
-
     while True:
         i+=1
         ret, img_raw =cap.read() #start capture images from webcam
@@ -67,27 +58,25 @@ for fullFileName in root1.tk.splitlist(filez):
     
         img_gray = cv2.cvtColor(img_raw,cv2.COLOR_BGR2GRAY)
         y_start = 1
-        y_stop = 294
+        y_stop = 480
         
-        x_start = 245
-        x_stop = 444
+        x_start = 1
+        x_stop = 480
     
-        x_start_region4Counting = 235
-        x_stop_region4Counting = 444
+        x_start_region4Counting = 120
+        x_stop_region4Counting = 360
         
-        y_start_region4Counting = 1
-        y_stop_region4Counting = 294    
-    
-        img_gray = img_gray[x_start:x_stop,y_start:y_stop]
-        cv2.imshow(r'color_img',img_gray)
-
+        y_start_region4Counting = 120
+        y_stop_region4Counting = 360
         blur = cv2.GaussianBlur(img_gray,(5,5),0)
     
-        retval,img_bi = cv2.threshold(blur,50,255,cv2.THRESH_BINARY_INV)
-        kernel = np.ones((3, 3), np.uint8)
+        retval,img_bi = cv2.threshold(blur,30,255,cv2.THRESH_BINARY_INV)
+        kernel = np.ones((7, 7), np.uint8)
         img_bi = cv2.erode(img_bi,kernel)
     
         contours,hierarchy = cv2.findContours(img_bi.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+
+        # only proceed if at least one contour was found
         if len(contours) > 0:
     		# find the largest contour in the mask, then use
     		# it to compute the minimum enclosing circle and
@@ -101,41 +90,42 @@ for fullFileName in root1.tk.splitlist(filez):
                     prev_center= center
                 else:
                     center = prev_center
-
             except ZeroDivisionError:
                 center = prev_center
-                print("ZeroDivisionError")  
+                print("ZeroDivisionError")
         else:
             center = prev_center
-            print('not detected')          
-    
+            print('not detected')
         d_dist = hypot(Moving_track[-1][0]-center[0],Moving_track[-1][1]-center[1])
+        Total_distance = Total_distance + d_dist
         Speed = (d_dist/0.04)*0.075
-        temp = "{:0>.2f}".format(Speed)    
-        Moving_track.append(center)
+        temp = "{:0>.2f}".format(Speed)
+        Moving_track.append(center)        
+
         points = np.array(Moving_track)
-        cv2.polylines(img_raw,np.int32([points[1:]]),0,(0,0,255))
-        line = str(center[0])+','+str(center[1])+','+str(Speed)+'\n'
+        cv2.polylines(img_raw,np.int32([points[1:]]),0,(0,0,255))            
+        
         Counting_temp = (float(center[0]) > x_start_region4Counting) & (float(center[0]) < x_stop_region4Counting)  & (float(center[1]) > y_start_region4Counting) & (float(center[1]) < y_stop_region4Counting)       
-        Counting+=Counting_temp                    
-                    
+        Counting+=Counting_temp
         percentage_in_region4Counting = Counting/i
         temp_percent = "{:0>.2f}".format(percentage_in_region4Counting)
+        line = str(center[0])+','+str(center[1])+','+str(Speed)+','+str(temp_percent)+','+str(Counting_temp)+'\n'
         cv2.putText(img_raw,str(Counting_temp),(50,50),font,1,(255,0,0),2,cv2.LINE_AA)
         cv2.rectangle(img_raw,(x_start_region4Counting,y_start_region4Counting),(x_stop_region4Counting,y_stop_region4Counting),(255,0,0))
         cv2.imshow(r'img',img_raw)
-        out.write(img_raw)
-
-        line = ','+','+str(-100)+'\n'
+        out.write(img_raw)        
+        
         with open(root+r'_trackTrace.csv','a') as f:
-                f.write(line)
-
+            f.write(line)    
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
         
     cap.release()
+    print(fullFileName)
     print(temp_percent)
-
+    print(Total_distance)
+    
 print("Processing Done!")
+
 cv2.destroyAllWindows()
 out.release()

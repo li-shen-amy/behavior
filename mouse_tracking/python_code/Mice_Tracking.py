@@ -27,11 +27,6 @@ cap = cv2.VideoCapture(filename)
 Moving_track = [(0,0)]
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-# export video setting
-#width = cap.get(3)
-#height = cap.get(4)
-
-
 fourcc = cv2.VideoWriter_fourcc('m','p','4','v')
 out = cv2.VideoWriter(root+'_out.mp4',fourcc,30,(1280,720))
 
@@ -53,18 +48,15 @@ while True:
     i+=1
     ret, img_raw =cap.read() #start capture images from webcam
     if ret == False:
-        break
-        
+        break        
     if i==1:
-        r = cv2.selectROI(img_raw)
-    
+        r = cv2.selectROI(img_raw)    
     img_gray = cv2.cvtColor(img_raw,cv2.COLOR_BGR2GRAY)
     y_start = int(r[0])
     y_stop = int(r[0]+r[2])
     
     x_start = int(r[1])
-    x_stop = int(r[1]+r[3])
-     
+    x_stop = int(r[1]+r[3])     
     
     img_gray = img_gray[x_start:x_stop,y_start:y_stop]
     color_img = cv2.cvtColor(img_gray, cv2.COLOR_GRAY2RGB)
@@ -74,7 +66,7 @@ while True:
     binary,contours,hierarchy = cv2.findContours(img_bi.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
 
-  # only proceed if at least one contour was found
+    # only proceed if at least one contour was found
     if len(contours) > 0:
 		# find the largest contour in the mask, then use
 		# it to compute the minimum enclosing circle and
@@ -84,26 +76,33 @@ while True:
         try:
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"])+int(y_start), int(M["m01"] / M["m00"])+int(x_start))
-
             if radius >10:
-                d_dist = hypot(Moving_track[-1][0]-center[0],Moving_track[-1][1]-center[1])
-                Speed = (d_dist/0.04)*0.075
-
-                Moving_track.append(center)
-
-                points = np.array(Moving_track)
-                cv2.polylines(img_raw,np.int32([points[1:]]),0,(0,0,255))
-                cv2.imshow(r'img',img_raw)
-                out.write(img_raw)
-                line = str(center[0])+','+str(center[1])+','+str(Speed)+'\n'
-                with open(root+r'_trackTrace.csv','a') as f:
-                    f.write(line)
+                prev_center= center
+            else:
+                center = prev_center
 
         except ZeroDivisionError:
+            center = prev_center
             print("error")
+    else:
+        center = prev_center
+        print('not detected')
+
+    d_dist = hypot(Moving_track[-1][0]-center[0],Moving_track[-1][1]-center[1])
+    Speed = (d_dist/0.04)*0.075
+    Moving_track.append(center)
+    points = np.array(Moving_track)
+    cv2.polylines(img_raw,np.int32([points[1:]]),0,(0,0,255))
+    cv2.imshow(r'img',img_raw)
+    out.write(img_raw)
+    line = str(center[0])+','+str(center[1])+','+str(Speed)+'\n'
+    with open(root+r'_trackTrace.csv','a') as f:
+        f.write(line)
+
+    except ZeroDivisionError:
+        print("error")
 
     print("this is frame#:", i)
-
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break    
 
