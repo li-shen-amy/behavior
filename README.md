@@ -11,6 +11,7 @@ This python toolbox is for automatically detect rodent licking from video data.
 - Typical running time:  5min for 1h video
 
 Required packages: numpy, cv2, tkinter, os (python3)
+
 Processing pipeline: 
 - Select and Open the movie files
 - Select the Region of Interest (ROI) interactively: areas contain tongue image (and trigger LED signal if needed)
