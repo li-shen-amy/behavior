@@ -6,7 +6,7 @@
 
 ## Lick Detection
 This python toolbox is for automatically detect rodent licking from video data.
-- Software dependency: Python >= 3.0, Matlab >= 7.0
+- Software dependency: Python >= 3.0
 - Operating System: Windows, Linux, MacOS
 - Typical running time:  5min for 1h video
 
