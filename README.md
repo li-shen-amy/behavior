@@ -63,7 +63,10 @@ Run the codes, get the lick timestamp (variable: lick_timestamp) and visualizati
         <p align="center">
   <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/vis_lick.png" />
 </p>  
- 
+
+## Tensorflow model for lick detection (99% accuracy)
+see [notebook](https://github.com/li-shen-amy/behavior/blob/main/lick_detect/lick_model.ipynb)
+
 ## Self Stimulation
 A behavior box for self-stimulation test: LED stimulation was triggered whenever the animal nose-poked the designated LED-on port, whereas nose-poking the other port did not trigger any photostimulation.
 
