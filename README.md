@@ -64,8 +64,17 @@ Run the codes, get the lick timestamp (variable: lick_timestamp) and visualizati
   <img src="https://github.com/li-shen-amy/behavior/raw/main/lick_detect/demo/vis_lick.png" />
 </p>  
 
-## Tensorflow model for lick detection (99% accuracy)
+## Tensorflow model for lick detection
 see [notebook](https://github.com/li-shen-amy/behavior/blob/main/lick_detect/lick_model.ipynb)
+**Metrics:**
+Test Accuracy = 0.9883720874786377
+|             | precision   | recall      | f1-score    |
+| ----------- | ----------- | ----------- | ----------- | 
+| No Lick     | 0.98        | 1.00        | 0.99        | 
+| Lick        | 1           | 0.97        | 0.99        | 
+| accuracy    | 0.99                                    |
+| macro avg   | 0.99        | 0.99        | 0.99        | 
+| weighted avg| 0.99        | 0.99        | 0.99        |
 
 ## Self Stimulation
 A behavior box for self-stimulation test: LED stimulation was triggered whenever the animal nose-poked the designated LED-on port, whereas nose-poking the other port did not trigger any photostimulation.
