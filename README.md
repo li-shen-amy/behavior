@@ -65,7 +65,8 @@ Run the codes, get the lick timestamp (variable: lick_timestamp) and visualizati
 </p>  
 
 ## Tensorflow model for lick detection
-see [notebook](https://github.com/li-shen-amy/behavior/blob/main/lick_detect/lick_model.ipynb)
+see [notebook](https://github.com/li-shen-amy/behavior/blob/main/lick_detect/lick_model_add_dropout_regularization.ipynb)
+
 **Metrics:**
 Test Accuracy = 0.9883720874786377
 |             | precision   | recall      | f1-score    |
